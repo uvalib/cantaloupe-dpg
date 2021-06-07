@@ -7,7 +7,7 @@ FROM openjdk:11.0.11-9-jre-buster
 RUN apt update
 
 # Create the run user and group
-RUN addgroup --gid 1000 webservice && adduser -q --uid 1000 --gid 1000 --disabled-login webservice
+RUN addgroup --gid 18570 sse && adduser -q --uid 1984 --gid 18570 --disabled-login docker
 
 # set the timezone appropriatly
 ENV TZ=UTC
@@ -21,7 +21,7 @@ WORKDIR $APP_HOME
 RUN mkdir -p $APP_HOME/scripts $APP_HOME/bin
 
 # Update permissions
-RUN chown -R webservice $APP_HOME /home/webservice && chgrp -R webservice $APP_HOME /home/webservice
+RUN chown -R docker $APP_HOME /home/docker && chgrp -R sse $APP_HOME /home/docker
 
 # port and run command
 EXPOSE 8080
@@ -30,21 +30,21 @@ CMD scripts/entry.sh
 # Move in necessary assets
 COPY package/scripts/entry.sh $APP_HOME/scripts/entry.sh
 COPY package/config/cantaloupe.properties $APP_HOME/bin
-COPY package/data/container_bash_profile /home/webservice/.profile
+COPY package/data/container_bash_profile /home/docker/.profile
 
 # download the cantaloupe release
 RUN wget -c https://github.com/cantaloupe-project/cantaloupe/releases/download/v5.0.2/cantaloupe-5.0.2.zip && unzip cantaloupe-5.0.2.zip && rm cantaloupe-5.0.2.zip
 RUN mv cantaloupe-5.0.2/cantaloupe-5.0.2.jar $APP_HOME/bin && ln -s $APP_HOME/bin/cantaloupe-5.0.2.jar $APP_HOME/bin/cantaloupe.jar
 
 # Ensure permissions are correct
-RUN chown webservice:webservice /home/webservice/.profile $APP_HOME/scripts/entry.sh && chmod 755 /home/webservice/.profile $APP_HOME/scripts/entry.sh
+RUN chown docker:sse /home/docker/.profile $APP_HOME/scripts/entry.sh && chmod 755 /home/docker/.profile $APP_HOME/scripts/entry.sh
 
 # Add the build tag
 ARG BUILD_TAG
 RUN test -n "$BUILD_TAG" && touch $APP_HOME/buildtag.build-$BUILD_TAG || touch $APP_HOME/buildtag.build-0
 
 # Specify the user
-USER webservice
+USER docker
 
 #
 # end of file
