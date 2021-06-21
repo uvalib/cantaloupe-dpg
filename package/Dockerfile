@@ -7,7 +7,7 @@ FROM openjdk:11.0.11-9-jre-buster
 RUN apt update
 
 # Create the run user and group
-RUN addgroup --gid 16339 lb-digiserv && adduser -q --uid 118698 --gid 16339 --disabled-login lb-digiserv
+RUN addgroup --gid 16339 lb-digiserv && adduser -q --uid 118698 --gid 16339 --disabled-login libsnlocal
 
 # set the timezone appropriatly
 ENV TZ=UTC
