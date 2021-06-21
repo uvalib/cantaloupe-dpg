@@ -7,13 +7,13 @@ FROM openjdk:11.0.11-9-jre-buster
 RUN apt update
 
 # Create the run user and group
-RUN addgroup --gid 16339 lb-digiserv && adduser --uid 118698 libsnlocal -G lb-digiserv -D
+RUN addgroup --gid 16339 lb-digiserv && adduser -q --uid 118698 --gid 16339 --disabled-login lb-digiserv
 
 # set the timezone appropriatly
 ENV TZ=UTC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# Specify home 
+# Specify home
 ENV APP_HOME /cantaloupe-uva
 WORKDIR $APP_HOME
 
@@ -21,7 +21,7 @@ WORKDIR $APP_HOME
 RUN mkdir -p $APP_HOME/scripts $APP_HOME/bin
 
 # Update permissions
-RUN chown -R libsnlocal $APP_HOME && chgrp -R lb-digiserv $APP_HOME 
+RUN chown -R libsnlocal /home/libsnlocal $APP_HOME && chgrp -R lb-digiserv $APP_HOME /home/libsnlocal
 
 # port and run command
 EXPOSE 8080
