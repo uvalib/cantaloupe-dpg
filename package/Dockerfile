@@ -1,7 +1,7 @@
 #
 # build the target container
 #
-FROM openjdk:11.0.11-9-jre-buster
+FROM public.ecr.aws/docker/library/openjdk:11.0.14.1-jre-buster
 
 # update the packages
 RUN apt update
@@ -33,8 +33,8 @@ COPY package/config/cantaloupe.properties $APP_HOME/bin
 COPY package/data/container_bash_profile /home/libsnlocal/.profile
 
 # download the cantaloupe release
-RUN wget -c https://github.com/cantaloupe-project/cantaloupe/releases/download/v5.0.3/cantaloupe-5.0.3.zip && unzip cantaloupe-5.0.3.zip && rm cantaloupe-5.0.3.zip
-RUN mv cantaloupe-5.0.3/cantaloupe-5.0.3.jar $APP_HOME/bin && ln -s $APP_HOME/bin/cantaloupe-5.0.3.jar $APP_HOME/bin/cantaloupe.jar
+RUN wget -c https://github.com/cantaloupe-project/cantaloupe/releases/download/v5.0.5/cantaloupe-5.0.5.zip && unzip cantaloupe-5.0.5.zip && rm cantaloupe-5.0.5.zip
+RUN mv cantaloupe-5.0.5/cantaloupe-5.0.5.jar $APP_HOME/bin && ln -s $APP_HOME/bin/cantaloupe-5.0.5.jar $APP_HOME/bin/cantaloupe.jar
 
 # Ensure permissions are correct
 RUN chown libsnlocal:lb-digiserv /home/libsnlocal/.profile $APP_HOME/scripts/entry.sh && chmod 755 /home/libsnlocal/.profile $APP_HOME/scripts/entry.sh
