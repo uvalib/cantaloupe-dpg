@@ -1,13 +1,13 @@
 #
 # build the target container
 #
-FROM public.ecr.aws/docker/library/openjdk:11.0.14.1-jre-buster
+FROM public.ecr.aws/amazoncorretto/amazoncorretto:11-al2022-jdk
 
 # update the packages
-RUN apt update
+RUN yum -y update && yum -y install findutils shadow-utils wget unzip
 
 # Create the run user and group
-RUN addgroup --gid 16339 lb-digiserv && adduser -q --uid 118698 --gid 16339 --disabled-login libsnlocal
+RUN groupadd -g 16339 lb-digiserv && useradd -u 118698 -g lb-digiserv libsnlocal
 
 # set the timezone appropriatly
 ENV TZ=UTC
