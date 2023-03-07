@@ -14,7 +14,7 @@ ENV TZ=UTC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Specify home
-ENV APP_HOME /cantaloupe-uva
+ENV APP_HOME /cantaloupe-dpg
 WORKDIR $APP_HOME
 
 # Create necessary directories
