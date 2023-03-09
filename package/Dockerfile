@@ -27,14 +27,13 @@ RUN chown -R libsnlocal /home/libsnlocal $APP_HOME && chgrp -R lb-digiserv $APP_
 EXPOSE 8080
 CMD scripts/entry.sh
 
-# Move in necessary assets
+# Move in cantaloupe assets
+COPY distro/cantaloupe-5.0.5/cantaloupe-5.0.5.jar $APP_HOME/bin/cantaloupe.jar
+
+# Move in custom assets
 COPY package/scripts/entry.sh $APP_HOME/scripts/entry.sh
 COPY package/config/cantaloupe.properties $APP_HOME/bin
 COPY package/data/container_bash_profile /home/libsnlocal/.profile
-
-# download the cantaloupe release
-RUN wget -c https://github.com/cantaloupe-project/cantaloupe/releases/download/v5.0.5/cantaloupe-5.0.5.zip && unzip cantaloupe-5.0.5.zip && rm cantaloupe-5.0.5.zip
-RUN mv cantaloupe-5.0.5/cantaloupe-5.0.5.jar $APP_HOME/bin && ln -s $APP_HOME/bin/cantaloupe-5.0.5.jar $APP_HOME/bin/cantaloupe.jar
 
 # Ensure permissions are correct
 RUN chown libsnlocal:lb-digiserv /home/libsnlocal/.profile $APP_HOME/scripts/entry.sh && chmod 755 /home/libsnlocal/.profile $APP_HOME/scripts/entry.sh
