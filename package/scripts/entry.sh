@@ -2,7 +2,7 @@
 # startup script
 #
 
-cd bin; java -Dcantaloupe.config=cantaloupe.properties -Xmx4g -jar cantaloupe.jar
+cd bin; java ${JAVA_OPTS} -Dcantaloupe.config=cantaloupe.properties -jar cantaloupe.jar
 
 #
 # end of file
