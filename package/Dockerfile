@@ -14,7 +14,7 @@ ENV TZ=UTC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Specify home
-ENV APP_HOME /cantaloupe-dpg
+ENV APP_HOME=/cantaloupe-dpg
 WORKDIR $APP_HOME
 
 # Create necessary directories
@@ -28,7 +28,7 @@ EXPOSE 8080
 CMD scripts/entry.sh
 
 # add cantaloupe assets
-ENV CANTALOUPE_VERSION=5.0.6
+ENV CANTALOUPE_VERSION=5.0.7
 RUN cd /tmp && wget https://github.com/cantaloupe-project/cantaloupe/releases/download/v${CANTALOUPE_VERSION}/cantaloupe-${CANTALOUPE_VERSION}.zip && unzip cantaloupe-${CANTALOUPE_VERSION}.zip
 RUN cp /tmp/cantaloupe-${CANTALOUPE_VERSION}/cantaloupe-${CANTALOUPE_VERSION}.jar $APP_HOME/bin/cantaloupe.jar
 RUN rm -fr /tmp/cantaloupe-${CANTALOUPE_VERSION} /tmp/cantaloupe-${CANTALOUPE_VERSION}.zip
